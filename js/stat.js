@@ -14,10 +14,18 @@ var USER_COLOR = 'rgba(255, 0, 0, 1)';
 var BAR_DISTANCE = 50;
 var BAR_START_X = 130;
 var BAR_START_Y = 250;
+var TEXT_LINE_ONE = 'Ура вы победили!';
+var TEXT_LINE_TWO = 'Список результатов:';
 
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+};
+
+var renderText = function (ctx, color, text, x, y) {
+  ctx.fillStyle = color;
+  ctx.font = MESSAGE_FONT;
+  ctx.fillText(text, x, y);
 };
 
 var getRandomBlueColor = function () {
@@ -29,18 +37,15 @@ var getRandomBlueColor = function () {
 var renderBar = function (ctx, color, xOffset, barHeight, playerName, playerScore) {
   ctx.fillStyle = color;
   ctx.fillRect(BAR_START_X + xOffset, BAR_START_Y, BAR_WIDTH, -barHeight);
-  ctx.fillStyle = '#000000';
-  ctx.fillText(playerName, BAR_START_X + xOffset + 5, BAR_START_Y + 20);
-  ctx.fillText(playerScore, BAR_START_X + xOffset + 5, BAR_START_Y - barHeight - 10);
+  renderText(ctx, '#000000', playerName, BAR_START_X + xOffset + 5, BAR_START_Y + 20);
+  renderText(ctx, '#000000', playerScore, BAR_START_X + xOffset + 5, BAR_START_Y - barHeight - 10);
 };
 
 window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + SHADOW_OFFSET, CLOUD_Y + SHADOW_OFFSET, 'rgba(0, 0, 0, 0.3)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#ffffff');
-  ctx.fillStyle = '#000000';
-  ctx.font = MESSAGE_FONT;
-  ctx.fillText('Ура вы победили!', CLOUD_X + TEXT_OFFSET, CLOUD_Y + TEXT_OFFSET);
-  ctx.fillText('Список результатов:', CLOUD_X + TEXT_OFFSET, CLOUD_Y + TEXT_OFFSET + TEXT_LINE_HEIGHT);
+  renderText(ctx, '#000000', TEXT_LINE_ONE, CLOUD_X + TEXT_OFFSET, CLOUD_Y + TEXT_OFFSET);
+  renderText(ctx, '#000000', TEXT_LINE_TWO, CLOUD_X + TEXT_OFFSET, CLOUD_Y + TEXT_OFFSET + TEXT_LINE_HEIGHT);
 
   var maxTime = Math.max.apply(null, times);
   var proportion = MAX_BAR_HEIGHT / maxTime;
