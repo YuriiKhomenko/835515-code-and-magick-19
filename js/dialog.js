@@ -4,6 +4,10 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setupWindow.querySelector('.setup-close');
   var userNameInput = setupWindow.querySelector('.setup-user-name');
+  var setupWindowStartCoords = {
+    top: '80px',
+    left: '50%'
+  };
 
   setupWindow.querySelector('.setup-similar').classList.remove('hidden');
 
@@ -15,6 +19,8 @@
   var closeSetupWindow = function () {
     setupWindow.classList.add('hidden');
     document.removeEventListener('keydown', onSetupWindowEscPress);
+    setupWindow.style.top = setupWindowStartCoords.top;
+    setupWindow.style.left = setupWindowStartCoords.left;
   };
 
   var onSetupWindowEscPress = function (evt) {
