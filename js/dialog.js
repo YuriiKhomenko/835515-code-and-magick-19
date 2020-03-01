@@ -4,6 +4,7 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setupWindow.querySelector('.setup-close');
   var userNameInput = setupWindow.querySelector('.setup-user-name');
+  var form = setupWindow.querySelector('.setup-wizard-form');
   var setupWindowStartCoords = {
     top: '80px',
     left: '50%'
@@ -55,5 +56,12 @@
     } else {
       userNameInput.setCustomValidity('');
     }
+  });
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.upload(new FormData(form), function () {
+      setupWindow.classList.add('hidden');
+    }, window.backend.errorHandler);
   });
 })();
